@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import { KeycloakProvider } from "./auth/KeycloakProvider";
+import Router from "./router";
 
-function App() {
+function App({ keycloak, authenticated }) {  // ✅ reçoit les props
+   console.log("🔑 App reçoit:", { keycloak: !!keycloak, authenticated });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <KeycloakProvider keycloak={keycloak} authenticated={authenticated}> {/* ✅ les transmet */}
+      <BrowserRouter>
+        <div className="min-h-screen bg-gray-50 text-gray-900">
+          <main><Router /></main>
+        </div>
+      </BrowserRouter>
+    </KeycloakProvider>
   );
 }
 
